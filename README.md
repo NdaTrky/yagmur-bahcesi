@@ -50,6 +50,7 @@ Windows otomatik testleri ayrı geçici kayıt kullanır. Görüntü yakalamak i
 
 - [Son durum ve doğrulanmış sonuçlar](docs/GELISTIRME_DURUMU.md)
 - [Oyun tasarımı](docs/GDD.md)
+- [Kapsam genişletme ve tekrar oynanabilirlik önerisi — henüz uygulanmadı](docs/KAPSAM_GENISLETME_ONERISI.md)
 - [Test planı](docs/TEST_PLANI.md)
 - [Yayın hazırlığı ve dış bağımlılıklar](docs/YAYIN_HAZIRLIGI.md)
 - [Pazar araştırması ve konsept seçimi](ARASTIRMA_VE_KONSEPT_ONAYI.md)

@@ -1,6 +1,6 @@
 # Yağmur Bahçesi — ilerleme, koleksiyon ve tekrar oynanabilirlik önerisi
 
-2 Kasım 2026 · Tasarım önerisi · Henüz uygulanmadı.
+2 Kasım 2026 · Onaylanmış tasarım önerisi. **Çekirdek döngü ve üç mini oyun 0.2 test paketine uygulandı; uygulanmış/kalan kapsam [GENISLEME_02.md](GENISLEME_02.md) belgesinde.** Aşağıdaki öneriler ve efor tahminleri ilk planın kaydıdır.
 
 Bu belge kullanıcının kapsam genişletme talebine yanıt olarak hazırlanmıştır. Mevcut 0.1 sürümü, kayıtları ve GDD'nin uygulanmış kapsamını değiştirmez. Hedef kitle 4–6 yaş; Android, çevrimdışı çalışma ve reklamsız tek satın alma yönü korunmuştur. Süre, maliyet ve kullanıcı etkisi değerlendirmeleri tasarım tahminidir; ölçülmüş sonuç değildir.
 

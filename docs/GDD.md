@@ -1,6 +1,6 @@
 # Yağmur Bahçesi — Game Design Document
 
-Sürüm 0.1 · 2 Kasım 2026 · Durum: ilk oynanabilir sürüm geliştiriliyor.
+Temel tasarım kaydı 0.1 · 2 Kasım 2026. Aşağıdaki metin ilk prototipin kapsamını korur. **Güncel 0.2 kapsamı, ekonomi, koleksiyon ve mini oyunlar [GENISLEME_02.md](GENISLEME_02.md) belgesindedir ve burada geçen üç yatak/dört dost/para birimi yok gibi eski kapsam ifadelerinin yerini alır.**
 
 ## Executive summary ve kapsam kararı
 

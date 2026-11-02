@@ -2,6 +2,6 @@
 Status: ok
 LaunchState: COLD
 Activity: com.raingarden.yagmurbahcesi.dev/com.unity3d.player.UnityPlayerGameActivity
-TotalTime: 688
-WaitTime: 690
+TotalTime: 522
+WaitTime: 524
 Complete

@@ -1,0 +1,14 @@
+{
+  "date": "2026-11-02",
+  "generator": "image_gen",
+  "assets": [
+    {
+      "file": "Expansion.png",
+      "prompt": "Create a production game sprite atlas on a fully transparent background, square 4 columns by 4 rows of EQUAL square cells, exactly 16 isolated assets. Each sprite entirely within its own cell with at least 12% clear padding on every side; no grid lines, no text, no labels, no border, no ground backdrop. Soft richly painted watercolor/gouache storybook sprites for a gentle preschool garden game, warm light, soft hand painted botanical detail, clean readable silhouettes, slight 3/4 overhead garden viewpoint. Reference image is ONLY a style reference. Generate NEW assets, not the old objects. Exact row-major content: row1 bluebell flower plant with green stem/leaves and small earth mound; lavender plant; pink tulip plant; sunflower plant. Row2 white water lily on a green leaf; red poppy flower plant; small wood and leaf wind chime on its own short standing frame; mint and cream tiny birdhouse on a short post. Row3 low warm wooden bench; small golden garden lantern; turquoise watering can; small arched wooden footbridge. Row4 terracotta plant pot containing earth, no plant; tiny round stone garden fountain with pale blue water; woven picnic basket with folded yellow blanket; one beautiful blue and orange butterfly with wings spread. Objects centered in their own cells, matched visual weight, full object visible, restrained natural palette, delicate paper texture within opaque painted objects. Transparent gaps remain transparent."
+    },
+    {
+      "file": "Sumi.png",
+      "prompt": "Production 2D preschool game character sprite sheet, exactly FOUR poses of the SAME charming original snail SUMI in a square 2x2 grid of equal cells, each with generous 15% clear space on every edge and entire silhouette inside cell. Fully transparent background, no grid, no labels, no scenery. Reference is a STYLE reference for soft warm gouache painted storybook animal friends. Sumi is a small friendly peach cream snail with a dusty sky blue spiral shell, two short rounded feelers, small dark brown expressive eyes, rose cheeks, subtle sage green leaf scarf. Snail anatomy, no legs or human limbs. Three-quarter view facing right. Top left neutral happy curious expression with head upright; top right delighted closed crescent eyes and smile with head a little lifted; bottom left relaxed blink, head low but not hidden; bottom right curious wonder with slightly round mouth and tilted feelers. Keep IDENTICAL shell scale, body proportions, lighting and camera across all 4. Match whimsical painted pastel animal art style in reference. Readable at small sizes, not photoreal, no heavy black outline, no text."
+    }
+  ]
+}

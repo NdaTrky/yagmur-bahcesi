@@ -18,7 +18,8 @@ if ($Action -eq 'Smoke') {
     $arguments = @('--garden-smoke','--garden-output',('"'+$output+'"'),'-force-d3d11','-screen-fullscreen','0','-screen-width',$Width,'-screen-height',$Height,'-logFile',('"'+(Join-Path $output 'player.log')+'"'))
     # An interactive render window is required for end-of-frame capture.
     $process = Start-Process -FilePath $player -ArgumentList $arguments -PassThru
-    if (-not $process.WaitForExit(60000)) { $process.Kill(); throw 'Runtime preview timed out after 60 seconds.' }
+    if (-not $process.WaitForExit(120000)) { $process.Kill(); throw 'Runtime preview timed out after 120 seconds.' }
+    [pscustomobject]@{date=(Get-Date -Format o);exitCode=$process.ExitCode;status=if($process.ExitCode -eq 0){'passed'}else{'failed'}} | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $output 'process-exit.json') -Encoding UTF8
     if ($process.ExitCode -ne 0) { throw ('Runtime tests failed: '+$process.ExitCode) }
     Get-Content -LiteralPath (Join-Path $output 'runtime-tests.json') -Encoding UTF8
     exit 0

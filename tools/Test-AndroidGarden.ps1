@@ -6,6 +6,13 @@ $package='com.raingarden.yagmurbahcesi.dev'
 $activity=$package+'/com.unity3d.player.UnityPlayerGameActivity'
 $out=Join-Path $workspace 'Artifacts\Android-API36'
 New-Item -ItemType Directory -Path $out -Force | Out-Null
+& $adb start-server | Out-Null
+$ready=$false
+for($attempt=0;$attempt -lt 10;$attempt++) {
+    if ((& $adb devices) -match ('^'+[Regex]::Escape($Serial)+'\s+device$')) { $ready=$true; break }
+    Start-Sleep -Milliseconds 750
+}
+if(-not $ready) { throw 'The dedicated Android emulator is not ready.' }
 $avd=(& $adb -s $Serial emu avd name | Select-Object -First 1).Trim()
 if ($avd -ne 'RainGarden_API36') { throw 'This test may reset data only in the dedicated RainGarden_API36 emulator.' }
 $checks=New-Object System.Collections.Generic.List[object]
@@ -64,6 +71,71 @@ Start-Sleep -Seconds 1
 $after=State
 Check 'Process restart restores flowers, boat, picnic and language' ($after.plants[0] -eq 2 -and $after.boatLaunched -and $after.picnic[0] -eq 1 -and $after.language -eq 'tr')
 Capture 'restored'
+# Expanded reward loop: Android touch input only, never edit the save to grant progress.
+Tap 940 705
+Start-Sleep -Milliseconds 400
+Tap 810 675
+Start-Sleep -Milliseconds 400
+$partial=State
+Check 'Picnic opens and accepts its first fruit' ($partial.activities[0].step -eq 1)
+Capture 'picnic'
+Tap 1205 895
+& $adb -s $Serial shell am force-stop $package
+& $adb -s $Serial shell am start -W -n $activity | Out-Null
+Start-Sleep -Seconds 3
+Tap 525 710
+Start-Sleep -Milliseconds 600
+Tap 940 705
+Check 'Partial mini game survives process restart' ((State).activities[0].id -eq $partial.activities[0].id -and (State).activities[0].step -eq 1)
+Tap 1110 675
+Tap 810 675
+Start-Sleep -Milliseconds 400
+Check 'Picnic completion persists exactly one stamp' ((State).stamps -eq 1 -and (State).activities[0].claimed)
+Tap 810 675
+Check 'Extra reward screen tap does not duplicate stamp' ((State).stamps -eq 1)
+Tap 720 855
+Start-Sleep -Milliseconds 400
+Capture 'collection'
+Tap 1100 668
+Start-Sleep -Milliseconds 400
+Tap 660 710
+Start-Sleep -Milliseconds 400
+Check 'Earned stamp unlocks and plants bluebell' ((State).stamps -eq 0 -and (State).flowerIds[3] -eq 'bluebell' -and (State).unlocked -contains 'bluebell')
+Tap 880 465
+Check 'New flower grows in its garden plot' ((State).plants[3] -eq 2)
+foreach($kind in @(1,2)) {
+    if ($kind -eq 1) { Tap 220 280 } else { Tap 1640 350 }
+    Start-Sleep -Milliseconds 350
+    Capture ('activity-'+$kind)
+    for($step=0;$step -lt 30;$step++) {
+        $current=State
+        if ($current.activities[$kind].claimed) { break }
+        Tap 700 895
+        Start-Sleep -Milliseconds 150
+    }
+    Check ('Android help completes activity '+$kind) ((State).activities[$kind].claimed)
+    & $adb -s $Serial shell input keyevent 4
+    Start-Sleep -Milliseconds 300
+}
+Check 'Three activity rewards and one purchase balance correctly' ((State).stamps -eq 2 -and (State).activityCompletions -eq 3)
+Tap 270 980
+Start-Sleep -Milliseconds 400
+Capture 'discoveries'
+& $adb -s $Serial shell input keyevent 4
+Tap 1690 990
+Start-Sleep -Milliseconds 400
+Tap 960 875
+Start-Sleep -Seconds 1
+$album=& $adb -s $Serial shell 'ls /sdcard/Android/data/com.raingarden.yagmurbahcesi.dev/files/garden-album/*.png'
+Check 'Local garden album writes without storage permission' ($album -match '\.png')
+Capture 'expanded-garden'
+& $adb -s $Serial shell am force-stop $package
+& $adb -s $Serial shell am start -W -n $activity | Out-Null
+Start-Sleep -Seconds 3
+Tap 525 710
+Start-Sleep -Milliseconds 600
+$expanded=State
+Check 'Expanded wallet, new flower and discoveries survive restart' ($expanded.stamps -eq 2 -and $expanded.flowerIds[3] -eq 'bluebell' -and $expanded.discoveries[11])
 Tap 1460 65
 Start-Sleep -Milliseconds 500
 Capture 'parent-gate'

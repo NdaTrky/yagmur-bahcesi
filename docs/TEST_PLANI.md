@@ -4,6 +4,10 @@
 
 ## Otomatik kontroller
 
+0.2 için `GardenChecks` v1 göçü ve özgün dosyanın korunması, yeni kayıt sürümüne yazmayı reddetme, kopya işlemle bakiye koruma, yetersiz bakiye, ikinci kez ücret kesmeme, dokuz etkinlik düzeninin çözülebilirliği ve yeniden yükleme sonrası tekil ödülü sınar. `GardenSmoke` üç mini oyunu gerçek UI callback'leriyle tamamlar, dikim/dekor/projeler/Sumi/albümü kontrol eder. `Test-AndroidGarden.ps1` aynı döngünün Android giriş ve süreç yeniden başlatma kısmını doğrular.
+
+Windows işlev raporu ile süreç çıkışı ayrı kabul koşullarıdır. `runtime-tests.json` başarılı olsa bile `process-exit.json` başarısızsa Windows testi bütün olarak geçmez. 0.2'de saptanan yerel Unity kapanış çökmesi açık hatadır; ayrıntılar geliştirme raporundadır.
+
 Unity menüsü: `Rain Garden > Prepare project and scene`; komut satırı kontrolleri: `GardenChecks.Run`. Kural, sınır değerleri, yerel kayıt, yedekten kurtarma ve sahne referansları birlikte denetlenir. `GardenSmoke` yalnız `--garden-smoke` argümanıyla çalışan yerel test senaryosudur ve ayrı geçici kayıt kullanır; oyuncunun gerçek kaydına dokunmaz.
 
 Bir testin başarısızlığı sonraki ticari sürüme taşınmaz. Testin beklentisi yanlışsa neden belgelenir; yalnız yeşil sonuç için davranış gevşetilmez.

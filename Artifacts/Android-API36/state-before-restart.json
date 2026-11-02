@@ -1,15 +1,29 @@
 ﻿{
-    "version":  1,
+    "version":  2,
     "plants":  [
                    2,
+                   0,
+                   0,
+                   0,
                    0,
                    0
                ],
     "colors":  [
                    0,
                    0,
+                   0,
+                   0,
+                   0,
                    0
                ],
+    "flowerIds":  [
+                      "cosmos",
+                      "cosmos",
+                      "cosmos",
+                      "daisy",
+                      "cosmos",
+                      "daisy"
+                  ],
     "boatLaunched":  true,
     "picnic":  [
                    1,
@@ -29,8 +43,125 @@
                         {
                             "x":  -3.700000047683716,
                             "y":  -2.9000000953674318
+                        },
+                        {
+                            "x":  -7.800000190734863,
+                            "y":  1.100000023841858
+                        },
+                        {
+                            "x":  -0.699999988079071,
+                            "y":  1.600000023841858
+                        },
+                        {
+                            "x":  0.4000000059604645,
+                            "y":  -3.5
+                        },
+                        {
+                            "x":  7.699999809265137,
+                            "y":  -2.5999999046325685
+                        },
+                        {
+                            "x":  -4.5,
+                            "y":  -3.5
+                        },
+                        {
+                            "x":  4.900000095367432,
+                            "y":  1.399999976158142
+                        },
+                        {
+                            "x":  -0.4000000059604645,
+                            "y":  -0.800000011920929
+                        },
+                        {
+                            "x":  7.099999904632568,
+                            "y":  0.20000000298023225
+                        },
+                        {
+                            "x":  1.7000000476837159,
+                            "y":  -3.5999999046325685
                         }
                     ],
+    "placed":  [
+                   true,
+                   true,
+                   true,
+                   false,
+                   false,
+                   false,
+                   false,
+                   false,
+                   false,
+                   false,
+                   false,
+                   false
+               ],
+    "unlocked":  [
+                     "cosmos",
+                     "daisy",
+                     "pinwheel",
+                     "stones",
+                     "mushroom"
+                 ],
+    "stamps":  0,
+    "discoveries":  [
+                        true,
+                        false,
+                        false,
+                        true,
+                        false,
+                        false,
+                        true,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+    "plantedSpecies":  [
+                           "cosmos"
+                       ],
+    "activityCompletions":  0,
+    "activityPlays":  [
+                          0,
+                          0,
+                          0
+                      ],
+    "activities":  [
+                       {
+                           "id":  "",
+                           "kind":  0,
+                           "variant":  0,
+                           "step":  0,
+                           "boatCell":  0,
+                           "turns":  [
+
+                                     ],
+                           "claimed":  false
+                       },
+                       {
+                           "id":  "",
+                           "kind":  0,
+                           "variant":  0,
+                           "step":  0,
+                           "boatCell":  0,
+                           "turns":  [
+
+                                     ],
+                           "claimed":  false
+                       },
+                       {
+                           "id":  "",
+                           "kind":  0,
+                           "variant":  0,
+                           "step":  0,
+                           "boatCell":  0,
+                           "turns":  [
+
+                                     ],
+                           "claimed":  false
+                       }
+                   ],
+    "activeActivity":  0,
     "language":  "tr",
     "sound":  true,
     "reducedMotion":  false,

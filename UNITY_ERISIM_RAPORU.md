@@ -2,6 +2,8 @@
 
 ## Güncelleme — 2 Kasım 2026
 
+0.2 genişlemesi gerçek Unity proje dosyalarına uygulandı; üç mini oyun, koleksiyon ve ilerleme Android emülatöründe sınandı. Windows işlevleri çalışsa da normal kapanışta yerel Unity hatası sürüyor; “bütün testler geçti” denmiyor. Roblox için teknik/yayın planı hazırlandı, Roblox Editor bağlantısı veya Roblox yayını yapılmadı. Güncel ayrıntılar [raporda](docs/GELISTIRME_DURUMU.md).
+
 Kullanıcı Yağmur Bahçesi konseptini ve Android geliştirmesini onayladı; iOS ertelendi. Unity 6000.3.17f1 ile gerçek proje ve sahne oluşturuldu, C# kodları ve görsel/ses assetleri eklendi, Windows ve Android APK derlemeleri alındı. Unity Editor API/CLI otomasyonu ve gerçek Player çalıştırması doğrulandı. Android SDK/NDK/OpenJDK ve Android 16 emülatörü kuruldu. Önceki incelemenin aşağıdaki “henüz yapılmadı” ifadeleri tarihsel kayıttır; güncel sonuçlar [geliştirme durum raporundadır](docs/GELISTIRME_DURUMU.md).
 
 Asıl proje `YagmurBahcesi` klasöründe korunuyor. Android derleyicisinin Unicode yol kısıtlaması nedeniyle kullanıcı klasöründe ayrı bir derleme kopyası kullanılıyor. Git sürüm kaydı var. Unity penceresinde fareyle yapılan işlemler iddia edilmiyor; sahne/asset ayarları gerçek Unity Editor koduyla oluşturulup derleniyor.

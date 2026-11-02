@@ -1,4 +1,4 @@
-# Yağmur Bahçesi — ilk oynanabilir sürüm
+# Yağmur Bahçesi — 0.2 genişleme test paketi
 
 Unity 6000.3.17f1 ile geliştirilmiş, 4–6 yaş için tasarlanan sakin bir bahçe oyunu. İlk hedef Android; iOS ertelendi. Bu depo ticari yayını tamamlanmış ürün değildir.
 
@@ -11,6 +11,9 @@ Bu bilgisayarda **`OYUNU_AC.cmd` dosyasını çift tıkla**. Windows önizlemesi
 - Yaprak tekneyi gölete sürükle; rüzgâr aracını dene.
 - Elma veya armudu piknik örtüsüne ya da hayvan dostlarına taşı.
 - Karakterleri ve süsleri sürükle. Çiçek, piknik ve süs konumları kaydedilir; hayvan konumları oturumluk kalır.
+- Sepet, küçük bulut ve tekne düğmelerinden üç mini oyuna gir. Her tamamlanan oyun 1 bahçe pulu verir; yarım kalan oyunlar saklanır.
+- **Bahçem** ekranında 8 çiçek türü ve 12 dekoru keşfet; yeni türleri açıp altı alana dik. Açtığın içeriği yeniden kullanmak ücretsizdir.
+- **Keşifler** ekranında dört projeyi ilerlet, Sumi'yi bahçeye getir. **Anılar** bölümünde son altı bahçe görüntüsünü sakla.
 - Yetişkin alanında dil, ses, azaltılmış hareket, bilgi ve onaylı sıfırlama bulunur.
 
 ## Çıktılar
@@ -24,6 +27,8 @@ Bu bilgisayarda **`OYUNU_AC.cmd` dosyasını çift tıkla**. Windows önizlemesi
 | `Artifacts/` | Gerçek çalıştırmalardan görüntüler ve test sonuçları |
 
 APK dosyaları Play Store'a yüklenmiş değildir. Nihai mağaza kimliği, yayıncı bilgileri ve upload key henüz belirlenmedi.
+
+**Bilinen masaüstü sorunu:** Oynanış kontrolleri geçse de bu bilgisayarda Windows Player normal kapanışta `UnityPlayer.dll` içinde çöküyor. Android emülatöründe test edilen akışta bu hata görülmedi. Masaüstü kapanışı düzeltilmiş sayılmıyor; ayrıntılar [raporda](docs/GELISTIRME_DURUMU.md).
 
 ## Geliştirme
 
@@ -50,7 +55,9 @@ Windows otomatik testleri ayrı geçici kayıt kullanır. Görüntü yakalamak i
 
 - [Son durum ve doğrulanmış sonuçlar](docs/GELISTIRME_DURUMU.md)
 - [Oyun tasarımı](docs/GDD.md)
-- [Kapsam genişletme ve tekrar oynanabilirlik önerisi — henüz uygulanmadı](docs/KAPSAM_GENISLETME_ONERISI.md)
+- [Uygulanan genişleme ve kalan içerik](docs/GENISLEME_02.md)
+- [Kapsam genişletme ve tekrar oynanabilirlik önerisi](docs/KAPSAM_GENISLETME_ONERISI.md)
+- [Roblox uyarlama ve yayın planı](docs/ROBLOX_UYARLAMA_PLANI.md)
 - [Test planı](docs/TEST_PLANI.md)
 - [Yayın hazırlığı ve dış bağımlılıklar](docs/YAYIN_HAZIRLIGI.md)
 - [Pazar araştırması ve konsept seçimi](ARASTIRMA_VE_KONSEPT_ONAYI.md)

@@ -1,8 +1,8 @@
 ﻿{
-    "date":  "2026-11-02T14:24:25.7305714+03:00",
+    "date":  "2026-11-02T23:34:33.6842376+03:00",
     "apk":  "YagmurBahcesi-test.apk",
-    "sha256":  "FD421122A12B8B0ABF4205EF1CA09E1236A3B8917C24FC1A4665F6AB1FE3DB6E",
-    "bytes":  24377589,
+    "sha256":  "20EE8B66A5D6724C4AFC7A949923231933A7468EF3CEEDA53B279D0D1656A3C4",
+    "bytes":  29080853,
     "minApi":  26,
     "targetApi":  36,
     "abi":  "arm64-v8a",

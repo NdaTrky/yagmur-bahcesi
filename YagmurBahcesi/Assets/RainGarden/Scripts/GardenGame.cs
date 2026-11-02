@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 namespace RainGarden
 {
     public enum GardenTool { Explore, Rain, Sun, Wind }
-    public sealed class GardenGame : MonoBehaviour
+    public sealed partial class GardenGame : MonoBehaviour
     {
         public GardenArt art;
         public GardenEntity[] entities;
@@ -37,10 +37,12 @@ namespace RainGarden
         {
             Application.targetFrameRate=60;
             Input.simulateMouseWithTouches=false;
-            SmokeMode=Debug.isDebugBuild && Array.Exists(Environment.GetCommandLineArgs(),v=>v=="--garden-smoke");
-            string root=SmokeMode?System.IO.Path.Combine(Application.temporaryCachePath,"rain-garden-smoke"):Application.persistentDataPath;
+            SmokeMode=(Debug.isDebugBuild||Application.platform==RuntimePlatform.WindowsPlayer) && Array.Exists(Environment.GetCommandLineArgs(),v=>v=="--garden-smoke");
+            if(SmokeMode)Application.runInBackground=true;
+            string root=SmokeMode?System.IO.Path.Combine(Application.temporaryCachePath,"rain-garden-smoke",Guid.NewGuid().ToString("N")):Application.persistentDataPath;
             save=new GardenSave(System.IO.Path.Combine(root,"garden-v1.json"));
             State=SmokeMode?new GardenState():save.Load();
+            State.Validate();ExpandWorld();
             foreach(var e in entities) { e.Bind(this);e.visual.sortingOrder=BaseOrder(e); }
             voice=gameObject.AddComponent<AudioSource>();voice.playOnAwake=false;voice.spatialBlend=0;
             ambient=gameObject.AddComponent<AudioSource>();ambient.playOnAwake=false;ambient.spatialBlend=0;ambient.loop=true;ambient.clip=art.ambience;ambient.volume=.09f;
@@ -66,15 +68,17 @@ namespace RainGarden
         public GardenEntity Find(EntityKind kind,int index=0) => Array.Find(entities,e=>e.kind==kind && e.index==index);
         public void ApplyState()
         {
-            for(int i=0;i<3;i++)
+            for(int i=0;i<6;i++)
             {
                 var e=Find(EntityKind.Plot,i);int growth=State.plants[i];
-                e.visual.sprite=art.Prop(growth==2?4+State.colors[i]:3);
-                e.visual.color=new Color(1,1,1,growth==0?.6f:1);
+                e.visual.sprite=growth==2?GardenCatalog.FlowerSprite(art,GardenCatalog.FlowerIndex(State.flowerIds[i])):art.Prop(3);
+                e.visual.color=growth==2?GardenCatalog.Variant(State.colors[i]):new Color(1,1,1,growth==0?.6f:1);
                 e.baseScale=Vector3.one*(growth==0?.25f:growth==1?.46f:.66f);
                 e.transform.localScale=e.baseScale;
-                var decoration=Find(EntityKind.Decoration,i);decoration.SetRest(State.decorations[i]);
             }
+            for(int i=0;i<12;i++){var decoration=Find(EntityKind.Decoration,i);decoration.gameObject.SetActive(State.placed[i]);decoration.SetRest(State.decorations[i]);}
+            Find(EntityKind.Friend,4).gameObject.SetActive(GardenProjects.Sumi(State));
+            RefreshLandmarks();
             var boat=Find(EntityKind.Boat);boat.SetRest(State.boatLaunched?(Vector3)PondCenter:(Vector3)BoatStart);
             RebuildPicnic();
         }
@@ -87,13 +91,14 @@ namespace RainGarden
                 case EntityKind.Plot:
                     if(Tool==GardenTool.Rain) Water(entity.index);
                     else if(Tool==GardenTool.Sun) Sunshine(entity.index);
-                    else if(State.plants[entity.index]==2) {State.colors[entity.index]=1-State.colors[entity.index];ApplyState();Burst(entity.rest+Vector3.up*.6f);Save();}
+                    else if(State.plants[entity.index]==2) {State.colors[entity.index]=(State.colors[entity.index]+1)%3;ApplyState();FlowerResponse(entity);Save();}
                     else { Water(entity.index); }
                     entity.React();break;
                 case EntityKind.Cloud: Water(NextPlot());break;
                 case EntityKind.Friend:
                     entity.React();Sound(entity.index);
                     if(entity.index==2 && State.boatLaunched) Ripple(PondCenter);
+                    else if(entity.index==4) StartCoroutine(SumiWalk());
                     else Burst(entity.rest+Vector3.up*1.2f,6);
                     break;
                 case EntityKind.Boat: LaunchBoat();if(Tool==GardenTool.Wind) Wind();break;
@@ -102,36 +107,38 @@ namespace RainGarden
                 case EntityKind.Fruit: ShareFruit(entity.index+1);break;
                 case EntityKind.Basket: ShareFruit((fruitSequence++%2)+1);break;
                 case EntityKind.Decoration:
-                    entity.React();Burst(entity.rest+Vector3.up*.5f,5);Sound(3);break;
+                    DecorationResponse(entity);break;
             }
         }
-        int NextPlot() {for(int i=0;i<3;i++)if(State.plants[i]<2)return i;return UnityEngine.Random.Range(0,3);}
+        int NextPlot() {for(int i=0;i<6;i++)if(State.plants[i]<2)return i;return UnityEngine.Random.Range(0,6);}
         public void Water(int plot)
         {
-            if(plot<0 || plot>2)return;
-            GardenRules.Rain(State,plot);ApplyState();StartCoroutine(RainAt(Find(EntityKind.Plot,plot).rest));
+            if(plot<0 || plot>5)return;
+            GardenRules.Rain(State,plot);RememberFlower(plot);ApplyState();StartCoroutine(RainAt(Find(EntityKind.Plot,plot).rest));
             Find(EntityKind.Friend,0).React();Save();Sound(0);
             UI.Hint(State.plants[plot]==2?L("Merhaba, çiçek! Rengini değiştirmek için dokun.","Hello, flower! Tap to change its color."):L("Bir filiz! Güneşi ya da yağmuru dene.","A sprout! Try sunshine or more rain."));
         }
         public void Sunshine(int plot)
         {
-            bool grew=GardenRules.Sun(State,plot);ApplyState();Burst(Find(EntityKind.Plot,plot).rest+Vector3.up*.5f,12);Save();Sound(2);
+            if(plot<0||plot>5)return;
+            bool grew=GardenRules.Sun(State,plot);RememberFlower(plot);ApplyState();Burst(Find(EntityKind.Plot,plot).rest+Vector3.up*.5f,12);Save();Sound(2);
             UI.Hint(grew?L("Güneşle açıldı!","A sunny new bloom!"):L("Önce biraz yağmur iyi gelir.","A little rain will help first."));
         }
         public void LaunchBoat()
         {
-            State.boatLaunched=true;Find(EntityKind.Boat).SetRest(PondCenter);Find(EntityKind.Friend,2).React();Ripple(PondCenter);Save();Sound(3);
+            State.boatLaunched=true;State.discoveries[3]=true;Find(EntityKind.Boat).SetRest(PondCenter);Find(EntityKind.Friend,2).React();Ripple(PondCenter);RefreshLandmarks();Save();Sound(3);
             UI.Hint(L("Yaprak yüzüyor! Rüzgârı dene.","The leaf is sailing! Try the breeze."));
         }
         public void Wind()
         {
             if(!State.boatLaunched)LaunchBoat();WindUntil=Time.time+5;
+            State.discoveries[5]=true;RefreshLandmarks();Save();
             Find(EntityKind.Friend,2).React();StartCoroutine(WindTrail());Sound(4);
             UI.Hint(L("Hafif bir esinti...","A gentle little breeze..."));
         }
         public void ShareFruit(int fruit)
         {
-            GardenRules.Picnic(State,fruit);RebuildPicnic();Save();Sound(fruit+1);
+            if(GardenRules.Picnic(State,fruit)<0)return;State.discoveries[6]=true;RebuildPicnic();RefreshLandmarks();Save();Sound(fruit+1);
             Find(EntityKind.Friend,1).React();Find(EntityKind.Friend,3).React();
             Burst(PicnicCenter+Vector2.up*.3f,6);UI.Hint(L("Birlikte piknik yapalım.","A little picnic for everyone."));
         }
@@ -148,6 +155,7 @@ namespace RainGarden
         }
         public void MoveDecoration(int index,Vector2 point)
         {
+            if(index<0||index>=12)return;
             State.decorations[index]=new Vector2(Mathf.Clamp(point.x,-7.8f,7.8f),Mathf.Clamp(point.y,-3.7f,1.4f));
             Find(EntityKind.Decoration,index).SetRest(State.decorations[index]);Save();
         }
@@ -155,11 +163,11 @@ namespace RainGarden
         public void ToggleSound() {SetSound(!State.sound);Save();UI.Rebuild();}
         public void ToggleMotion() {State.reducedMotion=!State.reducedMotion;Save();UI.Rebuild();}
         public void SetSound(bool value) {State.sound=value;voice.mute=!value;if(value && !ambient.isPlaying)ambient.Play();if(!value)ambient.Stop();}
-        public bool Save() {bool ok=save.Write(State);if(!ok && UI!=null) UI.Hint(L("Bahçe kaydedilemedi. Cihazda boş alanı kontrol edin.","Could not save. Please check device storage."));return ok;}
+        public bool Save() {bool ok=save.Write(State);if(!ok && UI!=null) UI.Hint(save.ReadOnly?L("Kayıt daha yeni bir sürüme ait. Güncelleme gerekiyor.","This garden needs a newer app version."):L("Bahçe kaydedilemedi. Cihazda boş alanı kontrol edin.","Could not save. Please check device storage."));return ok;}
         public void ResetGarden()
         {
             var next=new GardenState{language=State.language,sound=State.sound,reducedMotion=State.reducedMotion,visited=true};
-            State=next;ApplyState();Save();UI.CloseModal();
+            if(!save.Write(next))return;State=next;ApplyState();UI.CloseModal();UI.Rebuild();
         }
         public void Sound(int note)
         {
@@ -249,7 +257,7 @@ namespace RainGarden
             else if(e.kind==EntityKind.Cloud)
             {
                 int target=0;float distance=float.MaxValue;
-                for(int i=0;i<3;i++){float d=Vector2.Distance(p,Find(EntityKind.Plot,i).rest);if(d<distance){distance=d;target=i;}}
+                for(int i=0;i<6;i++){float d=Vector2.Distance(p,Find(EntityKind.Plot,i).rest);if(d<distance){distance=d;target=i;}}
                 if(distance<4)Water(target);else {StartCoroutine(RainAt(p));Ripple(p);}
             }
             else if(e.kind==EntityKind.Boat && Vector2.Distance(p,PondCenter)<3)LaunchBoat();
@@ -264,6 +272,7 @@ namespace RainGarden
         void CancelPointer() {if(held!=null){held.dragging=false;held.SetRest(holdStart);held.visual.sortingOrder=BaseOrder(held);}held=null;finger=-999;moved=false;}
         void Update()
         {
+            if(SmokeMode)return; // The harness drives pointer/UI actions; ignore unrelated desktop input.
             if(Input.GetKeyDown(KeyCode.Escape)){if(UI.BlocksWorld)UI.CloseModal();else if(Playing)Home();}
             if(!Playing || UI.BlocksWorld)return;
             if(Input.touchCount>0)

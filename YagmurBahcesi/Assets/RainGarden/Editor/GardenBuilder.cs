@@ -28,7 +28,7 @@ public static class GardenBuilder
     {
         PlayerSettings.companyName="Rain Garden Development";
         PlayerSettings.productName="Yagmur Bahcesi";
-        PlayerSettings.bundleVersion="0.1.0";
+        PlayerSettings.bundleVersion="0.2.0";
         PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android,"com.raingarden.yagmurbahcesi.dev");
         PlayerSettings.defaultInterfaceOrientation=UIOrientation.AutoRotation;
         PlayerSettings.allowedAutorotateToPortrait=false;PlayerSettings.allowedAutorotateToPortraitUpsideDown=false;
@@ -42,7 +42,7 @@ public static class GardenBuilder
         PlayerSettings.Android.minSdkVersion=AndroidSdkVersions.AndroidApiLevel26;
         PlayerSettings.Android.targetSdkVersion=(AndroidSdkVersions)36;
         PlayerSettings.Android.targetArchitectures=AndroidArchitecture.ARM64;
-        PlayerSettings.Android.bundleVersionCode=1;
+        PlayerSettings.Android.bundleVersionCode=2;
         PlayerSettings.Android.forceInternetPermission=false;
         PlayerSettings.Android.forceSDCardPermission=false;
         PlayerSettings.SetScriptingBackend(NamedBuildTarget.Android,ScriptingImplementation.IL2CPP);
@@ -82,6 +82,7 @@ public static class GardenBuilder
         if(art!=null)
         {
             if(art.revision<2){RebuildProps(art,Texture("Objects"));art.revision=2;EditorUtility.SetDirty(art);}
+            if(art.revision<3)BuildExpansionArt(art);
             return art;
         }
         art=ScriptableObject.CreateInstance<GardenArt>();AssetDatabase.CreateAsset(art,path);
@@ -102,7 +103,40 @@ public static class GardenBuilder
         art.triangle=Primitive("Play triangle",64,(x,y)=>x>10 && x<54 && Mathf.Abs(y-31.5f)<(54-x)*.58f?1:0,art);
         art.drop=Primitive("Raindrop",64,(x,y)=>
         {float dx=(x-31.5f)/18f,dy=(y-23)/20f;return (dx*dx+dy*dy<1 || (y>=23 && y<59 && Mathf.Abs(x-31.5f)<(59-y)*.49f))?1:0;},art);
-        BuildAudio(art);EditorUtility.SetDirty(art);AssetDatabase.SaveAssets();return art;
+        BuildAudio(art);BuildExpansionArt(art);EditorUtility.SetDirty(art);AssetDatabase.SaveAssets();return art;
+    }
+    static void BuildExpansionArt(GardenArt art)
+    {
+        art.expansion=GridSprites(Texture("Expansion"),4,4,"Expansion",art);
+        art.sumi=GridSprites(Texture("Sumi"),2,2,"Sumi",art);
+        art.revision=3;EditorUtility.SetDirty(art);AssetDatabase.SaveAssets();
+    }
+    static Sprite[] GridSprites(Texture2D texture,int cols,int rows,string prefix,GardenArt art)
+    {
+        var pixels=texture.GetPixels32();
+        Func<bool,int,int[]> seams=(horizontal,count)=>
+        {
+            int length=horizontal?texture.width:texture.height,cross=horizontal?texture.height:texture.width;
+            var edges=new int[count+1];edges[count]=length;
+            for(int i=1;i<count;i++)
+            {
+                int expected=i*length/count,best=expected,bestScore=int.MaxValue,range=length/(count*5);
+                for(int pos=expected-range;pos<=expected+range;pos++)
+                {
+                    int opaque=0;for(int j=0;j<cross;j++){int index=horizontal?j*texture.width+pos:pos*texture.width+j;if(pixels[index].a>80)opaque++;}
+                    int score=opaque*1000+Math.Abs(pos-expected);if(score<bestScore){best=pos;bestScore=score;}
+                }
+                edges[i]=best;
+            }
+            return edges;
+        };
+        int[] xs=seams(true,cols),ys=seams(false,rows);var result=new Sprite[cols*rows];
+        for(int row=0;row<rows;row++)for(int col=0;col<cols;col++)
+        {
+            int lower=rows-row-1;
+            result[row*cols+col]=SpriteAsset(texture,new Rect(xs[col],ys[lower],xs[col+1]-xs[col],ys[lower+1]-ys[lower]),prefix+"_"+(row*cols+col),new Vector2(.5f,0),art);
+        }
+        return result;
     }
     static void RebuildProps(GardenArt art,Texture2D props)
     {
@@ -193,7 +227,7 @@ public static class GardenBuilder
     [MenuItem("Rain Garden/Build Windows preview")]
     public static void BuildWindows()
     {
-        Setup();Build(BuildTarget.StandaloneWindows64,Workspace+"/Builds/Windows/YagmurBahcesi.exe",BuildOptions.Development);
+        Setup();Build(BuildTarget.StandaloneWindows64,Workspace+"/Builds/Windows/YagmurBahcesi.exe",BuildOptions.None);
     }
     [MenuItem("Rain Garden/Build Android test APK")]
     public static void BuildAndroid()

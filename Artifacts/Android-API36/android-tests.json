@@ -1,5 +1,5 @@
 ﻿{
-    "date":  "2026-11-02T14:19:32.0501528+03:00",
+    "date":  "2026-11-02T23:36:53.3416232+03:00",
     "device":  "RainGarden_API36",
     "api":  36,
     "abi":  "x86_64",
@@ -36,6 +36,50 @@
                    },
                    {
                        "name":  "Process restart restores flowers, boat, picnic and language",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Picnic opens and accepts its first fruit",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Partial mini game survives process restart",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Picnic completion persists exactly one stamp",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Extra reward screen tap does not duplicate stamp",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Earned stamp unlocks and plants bluebell",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "New flower grows in its garden plot",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Android help completes activity 1",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Android help completes activity 2",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Three activity rewards and one purchase balance correctly",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Local garden album writes without storage permission",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Expanded wallet, new flower and discoveries survive restart",
                        "passed":  true
                    },
                    {

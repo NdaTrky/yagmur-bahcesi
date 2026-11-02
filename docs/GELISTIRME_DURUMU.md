@@ -1,5 +1,36 @@
 # Geliştirme sonucu — 2 Kasım 2026
 
+## Güncel durum: 0.2 genişleme test paketi
+
+Üç mini oyun, pul/kalıcı koleksiyon, altı dikim alanı, sekiz çiçek, on iki dekor, Sumi, dört proje ve yerel albüm uygulandı. Kapsamın tam davranışları ve henüz yapılmayan içerik [GENISLEME_02.md](GENISLEME_02.md) belgesinde. Android geliştirmesi sürüyor; Roblox için [ayrı uyarlama planı](ROBLOX_UYARLAMA_PLANI.md) hazırlandı. **Hiçbir mağazada/platformda yayın yapılmadı.**
+
+| Kontrol | 0.2 sonucu | Kanıt |
+|---|---|---|
+| Editor / kurallar | **150/150 geçti**; dokuz düzen, eski kayıt göçü, özgün yedek, bozulan kayıt, satın alma ve tekil ödül | `Artifacts/editor-tests.json` |
+| Windows oynanışı | **29/29 işlev kontrolü geçti**; gerçek düğme callback'leri, pointer akışı, dikim, tüm projeler, Sumi ve albüm | `Artifacts/Smoke-1600x900/runtime-tests.json`, `Artifacts/Smoke-1280x960/runtime-tests.json` |
+| Windows süreç kapanışı | **Başarısız**; normal çıkışta `0xc0000005` / `-1073741819`. İşlev kontrolünün geçmesi bütün masaüstü testinin geçtiği anlamına gelmez | `process-exit.json`, Player günlüğü ve Windows Application Error kaydı |
+| Android API 36 emülatörü | **22/22 geçti**; gerçek ADB dokunuşları, çevrimdışı oyun, yarım etkinlikten dönüş, üç ödül, yeni çiçek, albüm ve süreç yeniden başlatma | `Artifacts/Android-API36/android-tests.json` |
+| ARM64 test APK | 0.2.0 / versionCode 2; derlendi. Kesin boyut ve SHA256 paket raporunda | `Builds/Android/YagmurBahcesi-test.apk`, `Artifacts/Android-Package/package-tests.json` |
+| İzin / statik 16 KB kontrolü | Harici depolama, internet, kamera ve mikrofon izni yok; ZIP ve 6 yerel kütüphane hizalama kontrolü geçti | `Artifacts/Android-Package/` |
+
+Emülatörde bu genişleme oturumunun son ölçümü toplam PSS 191.188 KB (~186,7 MiB), RSS 316.240 KB. Bu SwiftShader/x86_64 ölçümüdür; fiziksel telefon FPS, pil veya bellek kabulü sayılmaz. Emülatör 4 KB bellek sayfası kullanır; 16 KB gerçek çalışma testi henüz yok.
+
+### Windows kapanış sorunu
+
+Hata yalnız test sonucundaki exit kodu atlanarak gizlenmedi; test scripti sıfır olmayan kodu başarısız sayar ve ayrıca `process-exit.json` yazar. Windows olay kaydındaki adres yerel Unity PDB sembolleriyle `RuntimeStatic<PlatformAccessibilityManager,0>::StaticDestroy` olarak çözüldü. Çökme oyun kontrolleri bitip normal çıkış başlatıldıktan sonra oluşuyor. İlerleme kapanıştan önce diske yazılıyor, ancak bundan veri kaybının her durumda imkânsız olduğu sonucu çıkarılmaz.
+
+Development modunu kapatma, erişilebilirlik modülünü başlatma ve pencereyi önce pasifleştirme denemeleri çözmedi. Başarısız geçici kodlar kaldırıldı. Kurulu Unity 6000.4.9f1, asıl proje değiştirilmeden ayrı derleme kopyasında denendi; onda da 29 kontrolün ardından aynı çıkış kodu görüldü. Ana proje **6000.3.17f1** olarak kaldı. İşletim sisteminin erişilebilirlik ayarları değiştirilmedi.
+
+Unity'nin UUM-157903 kaydı, UI Automation bağlıyken kapanışta erişilebilirlik temizliğinden giriş sistemine gelen mesajla ilgili benzer bir hatayı ve 6000.3.29f1 düzeltmesini listeliyor. Bu bizim hatamızın kesin aynı hata olduğunu kanıtlamaz. Sonraki teknik adım, düzeltilmiş LTS sürümünü ayrı kopyada sınamak ve ardından sürüm yükseltmesini değerlendirmektir. [Resmî hata kaydı](https://issuetracker.unity.com/issues/26102/player-crashes-on-newinputactivate-during-shutdown-when-narrator-is-enabled)
+
+### Yayına çıkmak için kalanlar
+
+Windows kapanışının çözümü; konuşmalı TR/EN yönergeler; Piknik Sepeti'nde dizilerden öte kural çeşitliliği; gerçek Android cihaz/uzun oturum ve aile pilotu; yayıncı/Play Console hesabı, ürün kimliği, destek/gizlilik metni, yayın imzası, AAB ve mağaza süreçleri. Otomatik testlerden yaşa uygunluk veya uzun vadeli bağlılık garantisi çıkarılmıyor.
+
+## 0.1 tarihsel raporu
+
+Aşağıdaki içerik önceki prototipin kaydıdır. Sayılar ve çıktı boyutları güncel 0.2 raporu yerine kullanılmamalıdır. Özellikle eski Windows işlev testleri kapanışın sorunsuz olduğunu kanıtlamaz.
+
 **Yağmur Bahçesi'nin ilk oynanabilir Unity sürümü hazır. Windows'ta ve yerel Android 16 emülatöründe gerçekten çalıştırıldı. Google Play'de yayın yapılmadı.**
 
 Kullanıcının onayladığı kapsam Android'dir; iOS beklemede. Google Play Console hesabı ve fiziksel Android cihazı henüz yok. Araştırma/konsept aşamasından gerçek proje, asset, sahne, oyun döngüsü ve APK aşamasına geçildi.

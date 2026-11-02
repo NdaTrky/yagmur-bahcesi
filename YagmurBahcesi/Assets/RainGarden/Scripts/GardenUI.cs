@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace RainGarden
 {
-    public sealed class GardenUI : MonoBehaviour
+    public sealed partial class GardenUI : MonoBehaviour
     {
         GardenGame game;
         Canvas canvas;
@@ -84,6 +84,7 @@ namespace RainGarden
             var hintRect=Panel(main,Vector2.zero,new Vector2(900,66),new Color(cream.r,cream.g,cream.b,.93f));Anchor(hintRect,new Vector2(.5f,1),new Vector2(0,-165));
             hintPanel=hintRect.GetComponent<Image>();hintPanel.raycastTarget=false;
             hint=Label(hintRect,"",Vector2.zero,new Vector2(850,60),23,ink,TextAnchor.MiddleCenter);hint.gameObject.SetActive(false);hintPanel.enabled=false;
+            BuildExpansionControls();
         }
         public void RefreshTools()
         {
@@ -137,7 +138,7 @@ namespace RainGarden
         void ConfirmReset()
         {
             var p=OpenModal(game.L("Yeni bir bahçe?","A fresh garden?"),new Vector2(820,570));
-            Label(p,game.L("Çiçekler, piknik ve süslerin yerleri sıfırlanacak.\nBu işlem geri alınamaz.","Flowers, picnic and decoration positions will be reset.\nThis cannot be undone."),new Vector2(0,40),new Vector2(720,140),27,ink,TextAnchor.MiddleCenter);
+            Label(p,game.L("Bahçe, pul bakiyesi, açılan türler ve keşifler sıfırlanacak.\nBu işlem geri alınamaz.","The garden, stamps, unlocked items and discoveries will be reset.\nThis cannot be undone."),new Vector2(0,40),new Vector2(720,140),27,ink,TextAnchor.MiddleCenter);
             Button(p,game.L("Vazgeç","Cancel"),new Vector2(-190,-155),new Vector2(320,85),cream,ink,ShowParents,27);
             Button(p,game.L("Yeni bahçe","Fresh garden"),new Vector2(190,-155),new Vector2(320,85),green,cream,game.ResetGarden,27);
         }
@@ -147,6 +148,8 @@ namespace RainGarden
             modal=Rect("Modal",safe,Vector2.zero,Vector2.zero);modal.anchorMin=Vector2.zero;modal.anchorMax=Vector2.one;modal.offsetMin=modal.offsetMax=Vector2.zero;
             var shade=modal.gameObject.AddComponent<Image>();shade.color=new Color(.14f,.22f,.16f,.5f);
             var p=Panel(modal,Vector2.zero,size,cream);
+            float available=Screen.safeArea.width/Mathf.Max(1,Screen.safeArea.height)*1080;
+            p.localScale=Vector3.one*Mathf.Min(1,(available-60)/size.x);
             Label(p,title,new Vector2(0,size.y/2-78),new Vector2(size.x-150,100),34,ink,TextAnchor.MiddleCenter,FontStyle.Bold);
             Button(p,"×",new Vector2(size.x/2-55,size.y/2-55),new Vector2(65,65),new Color(.91f,.92f,.85f),ink,CloseModal,38);
             return p;
@@ -198,7 +201,8 @@ namespace RainGarden
         }
         void Update()
         {
-            if(Screen.safeArea!=lastSafe || Screen.width!=lastWidth || Screen.height!=lastHeight)UpdateSafeArea();
+            if(stampLabel!=null)stampLabel.text=game.State.stamps+" "+game.L("pul","stamps");
+            if(Screen.safeArea!=lastSafe || Screen.width!=lastWidth || Screen.height!=lastHeight){UpdateSafeArea();Rebuild();}
             if(hint!=null && Time.unscaledTime>hintUntil){hint.gameObject.SetActive(false);hintPanel.enabled=false;}
         }
     }

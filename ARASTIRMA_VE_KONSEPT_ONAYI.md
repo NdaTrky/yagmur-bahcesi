@@ -1,5 +1,7 @@
 # 4–6 yaş için çocuk mobil oyunu — pazar araştırması ve konsept kararı
 
+**2 Kasım 2026 güncellemesi:** Kullanıcı Yağmur Bahçesi konseptini ve geliştirmeyi onayladı. Android ile ilerleniyor, iOS ertelendi. Aşağıdaki onay öncesi araştırma korunmuştur; güncel oyun ve test durumu [geliştirme raporundadır](docs/GELISTIRME_DURUMU.md).
+
 Araştırma tarihi: **1 Kasım 2026**. İlk aşama teslimi: pazar incelemesi, rakipler, 10 özgün konsept, ağırlıklı değerlendirme ve onay önerisi.
 
 Bu belge nihai GDD değildir. Konseptler ve görsel yön önerileri onaya sunulmaktadır; kesin tasarım, asset üretimi ve oyun kodlaması başlamadı. Yerel teknik erişim durumu [Unity erişim raporunda](UNITY_ERISIM_RAPORU.md) kayıtlıdır.

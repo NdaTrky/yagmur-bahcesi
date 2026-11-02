@@ -1,0 +1,77 @@
+﻿{
+    "date":  "2026-11-02T14:24:25.7305714+03:00",
+    "apk":  "YagmurBahcesi-test.apk",
+    "sha256":  "FD421122A12B8B0ABF4205EF1CA09E1236A3B8917C24FC1A4665F6AB1FE3DB6E",
+    "bytes":  24377589,
+    "minApi":  26,
+    "targetApi":  36,
+    "abi":  "arm64-v8a",
+    "developmentBuild":  false,
+    "signing":  "Local Android debug key; not a Play upload key",
+    "permissions":  [
+                        "uses-permission: name=\u0027com.raingarden.yagmurbahcesi.dev.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION\u0027"
+                    ],
+    "zipAlignment16KB":  "passed",
+    "elfAlignment16KB":  [
+                             {
+                                 "library":  "lib/arm64-v8a/libc++_shared.so",
+                                 "loadAlignments":  [
+                                                        16384,
+                                                        16384,
+                                                        16384,
+                                                        16384
+                                                    ],
+                                 "passed":  true
+                             },
+                             {
+                                 "library":  "lib/arm64-v8a/libgame.so",
+                                 "loadAlignments":  [
+                                                        16384,
+                                                        16384,
+                                                        16384
+                                                    ],
+                                 "passed":  true
+                             },
+                             {
+                                 "library":  "lib/arm64-v8a/libil2cpp.so",
+                                 "loadAlignments":  [
+                                                        16384,
+                                                        16384,
+                                                        16384,
+                                                        16384
+                                                    ],
+                                 "passed":  true
+                             },
+                             {
+                                 "library":  "lib/arm64-v8a/libmain.so",
+                                 "loadAlignments":  [
+                                                        16384,
+                                                        16384,
+                                                        16384,
+                                                        16384
+                                                    ],
+                                 "passed":  true
+                             },
+                             {
+                                 "library":  "lib/arm64-v8a/libswappywrapper.so",
+                                 "loadAlignments":  [
+                                                        16384,
+                                                        16384,
+                                                        16384
+                                                    ],
+                                 "passed":  true
+                             },
+                             {
+                                 "library":  "lib/arm64-v8a/libunity.so",
+                                 "loadAlignments":  [
+                                                        16384,
+                                                        16384,
+                                                        16384,
+                                                        16384
+                                                    ],
+                                 "passed":  true
+                             }
+                         ],
+    "runtime16KB":  "not tested",
+    "status":  "passed"
+}

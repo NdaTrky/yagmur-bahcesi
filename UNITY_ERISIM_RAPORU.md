@@ -1,5 +1,11 @@
 # Unity üzerinde doğrudan geliştirme — erişim ve çalışma raporu
 
+## Güncelleme — 2 Kasım 2026
+
+Kullanıcı Yağmur Bahçesi konseptini ve Android geliştirmesini onayladı; iOS ertelendi. Unity 6000.3.17f1 ile gerçek proje ve sahne oluşturuldu, C# kodları ve görsel/ses assetleri eklendi, Windows ve Android APK derlemeleri alındı. Unity Editor API/CLI otomasyonu ve gerçek Player çalıştırması doğrulandı. Android SDK/NDK/OpenJDK ve Android 16 emülatörü kuruldu. Önceki incelemenin aşağıdaki “henüz yapılmadı” ifadeleri tarihsel kayıttır; güncel sonuçlar [geliştirme durum raporundadır](docs/GELISTIRME_DURUMU.md).
+
+Asıl proje `YagmurBahcesi` klasöründe korunuyor. Android derleyicisinin Unicode yol kısıtlaması nedeniyle kullanıcı klasöründe ayrı bir derleme kopyası kullanılıyor. Git sürüm kaydı var. Unity penceresinde fareyle yapılan işlemler iddia edilmiyor; sahne/asset ayarları gerçek Unity Editor koduyla oluşturulup derleniyor.
+
 İnceleme tarihi: 1 Kasım 2026, Europe/Istanbul.
 Durum: Ortam incelemesi tamamlandı. Konsept onayı bekleniyor. Unity projesi oluşturulmadı; oyun kodu yazılmadı.
 

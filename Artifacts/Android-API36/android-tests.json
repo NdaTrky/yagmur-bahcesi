@@ -1,0 +1,54 @@
+﻿{
+    "date":  "2026-11-02T14:19:32.0501528+03:00",
+    "device":  "RainGarden_API36",
+    "api":  36,
+    "abi":  "x86_64",
+    "pageSize":  4096,
+    "status":  "passed",
+    "checks":  [
+                   {
+                       "name":  "Cold launch and play button while Wi-Fi/mobile data disabled",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Home language button changes English device default to Turkish",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Two Android taps grow the first flower",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Leaf boat drag selects boat rather than squirrel",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Apple drag selects fruit in front of friend",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Decoration drag saves its new position",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Background and resume preserve progress",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Process restart restores flowers, boat, picnic and language",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Parent modal blocks world input",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "Sound toggle persists",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "No Unity exception or Android fatal crash in test log",
+                       "passed":  true
+                   }
+               ]
+}

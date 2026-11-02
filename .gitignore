@@ -1,0 +1,16 @@
+YagmurBahcesi/[Ll]ibrary/
+YagmurBahcesi/[Tt]emp/
+YagmurBahcesi/[Oo]bj/
+YagmurBahcesi/[Ll]ogs/
+YagmurBahcesi/[Uu]ser[Ss]ettings/
+YagmurBahcesi/.vs/
+YagmurBahcesi/*.csproj
+YagmurBahcesi/*.sln
+Builds/
+Logs/
+Downloads/
+*.keystore
+*.jks
+*.pfx
+*.mobileprovision
+.env

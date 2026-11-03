@@ -1,5 +1,7 @@
 # Android yayın hazırlığı
 
+**3 Kasım güncellemesi:** Uygulanabilir sıra, mevcut build komutları, production eksikleri ve güncel resmî koşullar [release çalıştırma planında](RELEASE_CALISTIRMA_PLANI.md); kabulü engelleyen bulgular [kod denetimi kaydında](KOD_DENETIMI_VE_ACIK_KONULAR.md). Aşağıdaki önceki hazırlık notları korunmuştur.
+
 2 Kasım 2026. Durum: geliştirme; Google Play'e yükleme veya genel yayın yapılmadı. iOS kullanıcının talimatıyla ertelendi.
 
 ## Ürün ve mağaza kimliği

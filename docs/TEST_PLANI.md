@@ -1,5 +1,7 @@
 # Yağmur Bahçesi test planı
 
+**3 Kasım güncellemesi:** Adım, beklenen sonuç, geçme/kalma ölçütü ve önceki kanıt kapsamı için [112 senaryolu güncel test matrisini](TEST_SENARYOLARI_VE_KABUL_KRITERLERI.md) ve [CSV kayıt formunu](QA_TEST_KAYIT_SABLONU.csv) kullanın. Aşağıdaki 2 Kasım planı tarihsel bağlam olarak korunmuştur.
+
 2 Kasım 2026 · Bu belge yapılacak kontrolleri tanımlar; yapılmış test kanıtları test JSON'ları ve teslim raporundadır.
 
 ## Otomatik kontroller

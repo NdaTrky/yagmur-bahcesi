@@ -1,5 +1,7 @@
 # Yağmur Bahçesi — Game Design Document
 
+**Mevcut uygulamanın kod esaslı referansı:** [3 Kasım teknik ve fonksiyonel dokümantasyonu](TEKNIK_VE_FONKSIYONEL_DOKUMANTASYON.md). Gerçek davranış/test ayrımı için bu güncel referans kullanılır; aşağıdaki tasarım kaydı tarihsel kapsamını korur.
+
 Temel tasarım kaydı 0.1 · 2 Kasım 2026. Aşağıdaki metin ilk prototipin kapsamını korur. **Güncel 0.2 kapsamı, ekonomi, koleksiyon ve mini oyunlar [GENISLEME_02.md](GENISLEME_02.md) belgesindedir ve burada geçen üç yatak/dört dost/para birimi yok gibi eski kapsam ifadelerinin yerini alır.**
 
 ## Executive summary ve kapsam kararı

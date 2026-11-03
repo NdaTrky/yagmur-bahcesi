@@ -2,9 +2,39 @@
 
 Unity 6000.3.17f1 ile geliştirilmiş, 4–6 yaş için tasarlanan sakin bir bahçe oyunu. İlk hedef Android; iOS ertelendi. Bu depo ticari yayını tamamlanmış ürün değildir.
 
+Unity/C# ile yapay zekâ desteği kullanılarak geliştirilen kişisel bir oyun prototipidir. Üç mini oyun, altı dikim alanı, çiçek/dekor koleksiyonu, pul ekonomisi ve yerel JSON kayıt sistemi içerir. Arayüz UGUI, görseller SpriteRenderer, sesler AudioSource ile çalışır; ayrı backend veya veritabanı sunucusu yoktur.
+
+![Android emülatöründe Yağmur Bahçesi](Artifacts/Android-API36/expanded-garden.png)
+
+## GitHub'dan indirenler için
+
+1. Depoyu klonla veya ZIP olarak indirip tamamen çıkar.
+2. Unity Hub üzerinden **6000.3.17f1** Editor sürümünü kur. Android build alacaksan Android Build Support ve onun SDK/NDK/OpenJDK bileşenlerini de kur.
+3. Hub → **Projects → Add → Add project from disk** ile içteki **YagmurBahcesi** klasörünü seç. Bu klasör Assets, Packages ve ProjectSettings içerir.
+4. Editor'da **Assets/RainGarden/Scenes/Garden.unity** sahnesini aç; üstteki **▶ Play** düğmesine bas.
+
+Bu proje Node.js uygulaması değildir; npm kurulumu veya npm run dev komutu gerekmez. Unity ilk açılışta paketleri ve asset önbelleğini hazırlar. Windows'ta standart Unity kurulum yolunu kullanıyorsan UNITY_PROJESINI_AC.cmd de projeyi açar.
+
+**Builds klasörü Git deposuna dahil değildir.** GitHub kaynak ZIP'inde EXE/APK bulunmaz; OYUNU_AC.cmd için önce Windows build gerekir. Hazır dosyalar ayrıca paylaşılır. GitHub'a kaynak kod yüklemek oyunu tarayıcıda yayınlamaz; Web sürümü henüz hazırlanmadı. Aşağıdaki “bu bilgisayarda” yolları ve tarihli test raporları geliştirme ortamına aittir.
+
+## Teknik inceleme ve yayın kabulü — 3 Kasım 2026
+
+Mevcut kodun referansı ve geliştirme/test ekibi için çalışma paketi:
+
+- [Teknik ve fonksiyonel dokümantasyon](docs/TEKNIK_VE_FONKSIYONEL_DOKUMANTASYON.md): veri modeli, ekranlar, 60 kullanıcı aksiyonu, algoritmalar ve akış şemaları.
+- [112 test senaryosu ve kabul kriterleri](docs/TEST_SENARYOLARI_VE_KABUL_KRITERLERI.md), [sonuç kayıt formu](docs/QA_TEST_KAYIT_SABLONU.csv).
+- [Kod denetimi ve 26 açık konu](docs/KOD_DENETIMI_VE_ACIK_KONULAR.md): çalışma kanıtı, koddan çıkarılan risk ve eksik özellik ayrımı.
+- [Android release çalıştırma planı](docs/RELEASE_CALISTIRMA_PLANI.md): mevcut komutlar, production AAB/imza, cihaz kabulü ve mağaza adımları.
+
+Bu paket mevcut kaynağın incelemesidir; 112 yeni test çalıştırılmış veya açık hatalar düzeltilmiş değildir. Önceki test sonuçlarının kapsamı belgelenmiştir. Fiziksel ARM64/16 KB çalışma testi, production AAB ve Play hesabı/mağaza süreci henüz tamamlanmadığından yayın kabulü verilmemiştir.
+
 ## Hemen oyna
 
 Bu bilgisayarda **`OYUNU_AC.cmd` dosyasını çift tıkla**. Windows önizlemesi açılır; Unity Editor gerekmez. `Builds/Windows` klasörünün tamamı birlikte tutulmalıdır.
+
+Unity'de açmak için [UNITY_PROJESINI_AC.cmd](UNITY_PROJESINI_AC.cmd) dosyasını kullan veya Hub'daki **YagmurBahcesi** projesini aç. Garden sahnesinde **▶ Play** ile kaynak kodun mevcut hâlini dene. OYUNU_AC.cmd son derlenmiş EXE'yi çalıştırır; kod değişince EXE/APK kendiliğinden güncellenmez.
+
+[Kısa açılış ve paylaşım rehberi](docs/OYUNU_ACMA_VE_PAYLASMA.md), hazır Windows ZIP/Android APK bağlantılarını ve Expo Go, port ve Web önizlemesi seçeneklerini açıklar. Yeni build'leri arkadaşlara paketlemek için `tools/Prepare-SharePackage.ps1` kullanılabilir. Web çıktısı ve herkese açık oyun bağlantısı henüz oluşturulmadı.
 
 - Bahçeye gir; buluta veya toprağa dokunarak çiçek büyüt.
 - Güneş aracını seçip filize dokun; açılmış çiçeğe keşif modunda dokunarak rengini değiştir.

@@ -3,6 +3,8 @@ YagmurBahcesi/[Tt]emp/
 YagmurBahcesi/[Oo]bj/
 YagmurBahcesi/[Ll]ogs/
 YagmurBahcesi/[Uu]ser[Ss]ettings/
+YagmurBahcesi/Assets/_Recovery/
+YagmurBahcesi/Assets/_Recovery.meta
 YagmurBahcesi/.vs/
 YagmurBahcesi/*.csproj
 YagmurBahcesi/*.sln
@@ -14,5 +16,7 @@ Downloads/
 *.pfx
 *.mobileprovision
 .env
+.env.*
+!.env.example
 Artifacts/Smoke-v2-1600x900/
 Artifacts/WindowsEngineProbe/
